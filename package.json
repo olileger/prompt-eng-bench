@@ -1,0 +1,19 @@
+{
+  "name": "prompt-eng-bench",
+  "version": "0.0.1",
+  "description": "Prompt Engineering Bench (PEB) aims to ease the ellaboration of your best prompt engineering work",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/olileger/prompt-eng-bench.git"
+  },
+  "author": "Olivier",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/olileger/prompt-eng-bench/issues"
+  },
+  "homepage": "https://github.com/olileger/prompt-eng-bench#readme"
+}
