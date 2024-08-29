@@ -15,5 +15,10 @@
   "bugs": {
     "url": "https://github.com/olileger/prompt-eng-bench/issues"
   },
-  "homepage": "https://github.com/olileger/prompt-eng-bench#readme"
+  "homepage": "https://github.com/olileger/prompt-eng-bench#readme",
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "ejs": "^3.1.10",
+    "express": "^4.19.2"
+  }
 }
