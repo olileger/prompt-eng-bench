@@ -11,7 +11,8 @@
             "extensions": [
                 "Github.Copilot",
                 "ms-azuretools.vscode-docker",
-                "humao.rest-client"
+                "humao.rest-client", 
+                "GitHub.copilot-chat"
             ]
         }
     }
