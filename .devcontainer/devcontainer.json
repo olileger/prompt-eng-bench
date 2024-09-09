@@ -1,6 +1,7 @@
 {
     "name": "Dev Env",
     "image": "mcr.microsoft.com/vscode/devcontainers/javascript-node:latest",
+    "postCreateCommand": "npm install -g @vue/cli",
     "features":
     {
         "ghcr.io/devcontainers/features/azure-cli:1": {},
