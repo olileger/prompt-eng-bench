@@ -1,4 +1,4 @@
 import { createApp } from 'vue'
-import App from './App.vue'
+import PebApp from './PebApp.vue'
 
-createApp(App).mount('#app')
+createApp(PebApp).mount('#app')
