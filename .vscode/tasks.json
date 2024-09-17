@@ -35,6 +35,23 @@
             "endsPattern": "App running at"  // Le texte indiquant que le serveur est prêt
             }
         }
+      },
+      {
+        "label": "npm: stop serve",
+        "type": "shell",
+        "windows":
+        {
+            "command": "taskkill /IM node.exe /F"
+        },
+        "linux":
+        {
+            "command": "pkill -f 'npm run serve'"
+        },
+        "presentation":
+        {
+          "reveal": "always",
+          "panel": "dedicated"
+        }
       }
     ]
   }
