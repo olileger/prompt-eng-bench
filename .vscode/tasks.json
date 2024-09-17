@@ -1,0 +1,41 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+      {
+        "label": "npm: serve",
+        "type": "shell",
+        "command": "npm run serve",
+        "isBackground": true,  // Indique que la tâche se déroule en arrière-plan
+        "group": {
+          "kind": "build",
+          "isDefault": true
+        },
+        "options": {
+          "cwd": "${workspaceFolder}"  // Chemin vers le répertoire du projet
+        },
+        "presentation": {
+          "reveal": "always",
+          "panel": "dedicated"
+        },
+        "problemMatcher":
+        {
+            "owner": "custom",
+            "fileLocation": ["relative", "${workspaceFolder}"],
+            "pattern": [
+            {
+                "regexp": ".*",
+                "file": 1,
+                "location": 2,
+                "message": 3
+            }
+            ],
+            "background": {
+            "activeOnStart": true,
+            "beginsPattern": "Starting development server",  // Le texte qui marque le début du serveur
+            "endsPattern": "App running at"  // Le texte indiquant que le serveur est prêt
+            }
+        }
+      }
+    ]
+  }
+  
