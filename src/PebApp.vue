@@ -31,13 +31,13 @@ export default {
     {
       let tmpMessage = this.message;
       this.message = "";
+      this.discussion.push({ "role": "user", "content": tmpMessage });
 
       let d =
       {
         n: 1,
         messages: JSON.parse(JSON.stringify(this.discussion))
       };
-      d.messages.push({ "role": "user", "content": tmpMessage });
       
       let url = "https://{instanceName}.openai.azure.com/openai/deployments/{deploymentName}/chat/completions?api-version=2024-06-01";
       let fullpath = url.replace("{instanceName}", this.instanceName).replace("{deploymentName}", this.deploymentName);
@@ -61,7 +61,6 @@ export default {
       }
 
       // Add the discussion to the list only if no errors
-      this.discussion.push({ "role": "user", "content": tmpMessage });
       this.discussion.push({ "role": "assistant", "content": response.choices[0].message.content });
     }
   }
