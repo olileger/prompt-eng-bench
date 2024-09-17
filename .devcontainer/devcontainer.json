@@ -14,7 +14,8 @@
                 "ms-azuretools.vscode-docker",
                 "humao.rest-client",
                 "GitHub.copilot-chat",
-                "Vue.volar"
+                "Vue.volar",
+                "firefox-devtools.vscode-firefox-debug"
             ]
         }
     }
