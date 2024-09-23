@@ -8,6 +8,7 @@ export default {
     d.deploymentName = "";
     d.discussion = [];
     d.message = "";
+    d.controlDisabled = false;
     return d;
   },
   computed:
@@ -29,6 +30,8 @@ export default {
   {
     async send()
     {
+      this.controlDisabled = true;
+
       let tmpMessage = this.message;
       this.message = "";
       this.discussion.push({ "role": "user", "content": tmpMessage });
@@ -54,14 +57,13 @@ export default {
       });
       response = await response.json();
 
-      if (response.error)
-      {
-        alert(JSON.stringify(response.error));
-        return;
-      }
-
       // Add the discussion to the list only if no errors
-      this.discussion.push({ "role": "assistant", "content": response.choices[0].message.content });
+      if (response.error)
+        alert(JSON.stringify(response.error));
+      else
+        this.discussion.push({ "role": "assistant", "content": response.choices[0].message.content });
+      
+      this.controlDisabled = false;
     }
   }
 }
@@ -79,15 +81,15 @@ export default {
       <div class="col-6">
         <div>
           <label for="instanceName" class="form-label">AOAI Instance Name</label>
-          <input type="text" class="form-control" id="instanceName" v-model="instanceName">
+          <input type="text" class="form-control" id="instanceName" v-model="instanceName" :disabled="controlDisabled">
         </div>
         <div>
           <label for="key" class="form-label">AOAI API Key</label>
-          <input type="password" class="form-control" id="key" v-model="key">
+          <input type="password" class="form-control" id="key" v-model="key" :disabled="controlDisabled">
         </div>
         <div>
           <label for="deploymentName" class="form-label">Deployment name</label>
-          <input type="text" class="form-control" id="deployment" v-model="deploymentName">
+          <input type="text" class="form-control" id="deployment" v-model="deploymentName" :disabled="controlDisabled">
         </div>
         <div>
           <label for="readonly-text" class="form-label"></label>
@@ -95,8 +97,8 @@ export default {
         </div>
         <br/>
         <div class="input-group">
-          <input type="text" class="form-control" placeholder="Tchat with your model :-)" v-model="message"/>
-          <button class="btn btn-outline-secondary" type="submit" id="send" @click="send">Send</button>
+          <input type="text" class="form-control" placeholder="Tchat with your model :-)"  @keyup.enter="send" v-model="message" :disabled="controlDisabled"/>
+          <button class="btn btn-outline-secondary" type="submit" id="send" @click="send" :disabled="controlDisabled">Send</button>
         </div>
       </div>
       <div class="col">
