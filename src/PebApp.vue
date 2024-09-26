@@ -3,12 +3,13 @@ export default {
   data()
   {
     let d = {};
-    d.instanceName = "";
+    d.instanceName = "poc-003";
     d.key = "";
-    d.deploymentName = "";
+    d.deploymentName = "gpt-4t";
     d.discussion = [];
     d.message = "";
     d.controlDisabled = false;
+    d.inputDisabled = false;
     return d;
   },
   computed:
@@ -30,7 +31,9 @@ export default {
   {
     async send()
     {
-      this.controlDisabled = true;
+      if(!this.controlDisabled)
+        this.controlDisabled = true;
+      this.inputDisabled = true;
 
       let tmpMessage = this.message;
       this.message = "";
@@ -63,7 +66,7 @@ export default {
       else
         this.discussion.push({ "role": "assistant", "content": response.choices[0].message.content });
       
-      this.controlDisabled = false;
+      this.inputDisabled = false;
     }
   }
 }
@@ -97,8 +100,8 @@ export default {
         </div>
         <br/>
         <div class="input-group">
-          <input type="text" class="form-control" placeholder="Tchat with your model :-)"  @keyup.enter="send" v-model="message" :disabled="controlDisabled"/>
-          <button class="btn btn-outline-secondary" type="submit" id="send" @click="send" :disabled="controlDisabled">Send</button>
+          <input type="text" class="form-control" placeholder="Tchat with your model :-)"  @keyup.enter="send" v-model="message" :disabled="inputDisabled"/>
+          <button class="btn btn-outline-secondary" type="submit" id="send" @click="send" :disabled="inputDisabled">Send</button>
         </div>
       </div>
       <div class="col">
