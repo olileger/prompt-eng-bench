@@ -6,6 +6,7 @@ export default {
     d.instanceName = "poc-003";
     d.key = "";
     d.deploymentName = "gpt-4t";
+    d.systemMessage = "";
     d.discussion = [];
     d.message = "";
     d.controlDisabled = false;
@@ -21,7 +22,7 @@ export default {
       {
         if (o.role == "user")
           html += "You: " + o.content + "\n";
-        else
+        else if (o.role == "assistant")
           html += "Model: " + o.content + "\n";
       }
       return html;
@@ -34,6 +35,11 @@ export default {
       if(!this.controlDisabled)
         this.controlDisabled = true;
       this.inputDisabled = true;
+
+      if (this.discussion.length == 0)
+      {
+        this.discussion.push({ "role": "system", "content": this.systemMessage });
+      }
 
       let tmpMessage = this.message;
       this.message = "";
@@ -93,6 +99,10 @@ export default {
         <div>
           <label for="deploymentName" class="form-label">Deployment name</label>
           <input type="text" class="form-control" id="deployment" v-model="deploymentName" :disabled="controlDisabled">
+        </div>
+        <div>
+          <label for="system" class="form-label">System Message</label>
+          <textarea class="form-control" id="system" rows="5" v-model="systemMessage" :disabled="controlDisabled"></textarea>
         </div>
         <div>
           <label for="readonly-text" class="form-label"></label>
