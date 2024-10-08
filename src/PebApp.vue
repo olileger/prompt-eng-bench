@@ -3,9 +3,9 @@ export default {
   data()
   {
     let d = {};
-    d.instanceName = "poc-003";
+    d.instanceName = "";
     d.key = "";
-    d.deploymentName = "gpt-4t";
+    d.deploymentName = "";
     d.systemMessage = "";
     d.discussion = [];
     d.message = "";
@@ -32,19 +32,34 @@ export default {
   {
     async send()
     {
+      if (this.instanceName.length == 0 || this.key.length == 0 || this.deploymentName.length == 0)
+      {
+        alert("Please fill all the fields");
+        return;
+      }
+
+      if (this.message.length == 0)
+      {
+        alert("Please enter a message");
+        return;
+      }
+
       if(!this.controlDisabled)
         this.controlDisabled = true;
       this.inputDisabled = true;
 
-      if (this.discussion.length == 0)
+      // Add the System Message only once
+      if (this.discussion.length == 0 && this.systemMessage.length > 0)
       {
         this.discussion.push({ "role": "system", "content": this.systemMessage });
       }
 
+      // Add the input message to the discussion
       let tmpMessage = this.message;
       this.message = "";
       this.discussion.push({ "role": "user", "content": tmpMessage });
 
+      // Send to the API !
       let d =
       {
         n: 1,
@@ -54,23 +69,35 @@ export default {
       let url = "https://{instanceName}.openai.azure.com/openai/deployments/{deploymentName}/chat/completions?api-version=2024-06-01";
       let fullpath = url.replace("{instanceName}", this.instanceName).replace("{deploymentName}", this.deploymentName);
 
-      let response = await fetch(fullpath,
+      let response = null;
+      try
       {
-        method: "POST",
-        headers:
+        response = await fetch(fullpath,
         {
-          "Content-Type": "application/json",
-          "api-key": this.key
-        },
-        body: JSON.stringify(d)
-      });
-      response = await response.json();
+          method: "POST",
+          headers:
+          {
+            "Content-Type": "application/json",
+            "api-key": this.key
+          },
+          body: JSON.stringify(d)
+        });
+        response = await response.json();
+      }
+      catch (e)
+      {
+        response = { "error": e.message };
+      }
 
       // Add the discussion to the list only if no errors
-      if (response.error)
-        alert(JSON.stringify(response.error));
-      else
+      if (!response.error)
         this.discussion.push({ "role": "assistant", "content": response.choices[0].message.content });
+      else
+      {
+        this.controlDisabled = false; // unlock the controls
+        this.discussion = [];         // empty the discussion
+        alert("Error calling the API: " + JSON.stringify(response.error));
+      }
       
       this.inputDisabled = false;
     }
@@ -109,12 +136,10 @@ export default {
           <textarea class="form-control" id="readonly-text" rows="20" readonly v-model="discussionToHtml"></textarea>
         </div>
         <br/>
-        <div class="input-group">
+        <div class="input-group fixed-bottom w-auto">
           <input type="text" class="form-control" placeholder="Tchat with your model :-)"  @keyup.enter="send" v-model="message" :disabled="inputDisabled"/>
           <button class="btn btn-outline-secondary" type="submit" id="send" @click="send" :disabled="inputDisabled">Send</button>
         </div>
-      </div>
-      <div class="col">
       </div>
     </div>
   </div>

@@ -8,7 +8,7 @@ Prompt Engineering Bench (PEB) aims to ease the ellaboration of your best prompt
 - UI: avoir un toggle sur la section System Message
 - UI: avoir un toggle sur les paramètres du modèle
 - Core: support des endpoint OpenAI
-- UI+Core: vérifier que les paramètres du modèles soient remplis sinon popup d'erreur
+[x] UI+Core: vérifier que les paramètres du modèles soient remplis sinon popup d'erreur
 - Core: Fonctionnalité pour dupliquer avec/sans config de modèle (New / Duplicate)
 
 ## Bug report
