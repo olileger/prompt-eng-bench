@@ -107,45 +107,81 @@ export default {
 
 
 <template>
-    <div class="container">
-    <div class="row">
-      <br/>
+  <div class="outer-container">
+    <div class="input-container">
+      <input class="input-field input-field-left" type="text" id="instanceName" v-model="instanceName" :disabled="controlDisabled" placeholder="Instance Name">
+      <input class="input-field" type="password" id="key" v-model="key" :disabled="controlDisabled" placeholder="API Key">
+      <input class="input-field input-field-right" type="text" id="deployment" v-model="deploymentName" :disabled="controlDisabled" placeholder="Deployment name">
     </div>
-    <div class="row">
-      <div class="col">
-      </div>
-      <div class="col-6">
-        <div>
-          <label for="instanceName" class="form-label">AOAI Instance Name</label>
-          <input type="text" class="form-control" id="instanceName" v-model="instanceName" :disabled="controlDisabled">
-        </div>
-        <div>
-          <label for="key" class="form-label">AOAI API Key</label>
-          <input type="password" class="form-control" id="key" v-model="key" :disabled="controlDisabled">
-        </div>
-        <div>
-          <label for="deploymentName" class="form-label">Deployment name</label>
-          <input type="text" class="form-control" id="deployment" v-model="deploymentName" :disabled="controlDisabled">
-        </div>
-        <div>
-          <label for="system" class="form-label">System Message</label>
-          <textarea class="form-control" id="system" rows="5" v-model="systemMessage" :disabled="controlDisabled"></textarea>
-        </div>
-        <div>
-          <label for="readonly-text" class="form-label"></label>
-          <textarea class="form-control" id="readonly-text" rows="20" readonly v-model="discussionToHtml"></textarea>
-        </div>
-        <br/>
-        <div class="input-group fixed-bottom w-auto">
-          <input type="text" class="form-control" placeholder="Tchat with your model :-)"  @keyup.enter="send" v-model="message" :disabled="inputDisabled"/>
-          <button class="btn btn-outline-secondary" type="submit" id="send" @click="send" :disabled="inputDisabled">Send</button>
-        </div>
-      </div>
+
+    <div class="systemmessage-container">
+      <label class="app-label" for="system">System Message</label>
+      <textarea class="systemmessage-textarea" id="system" rows="5" v-model="systemMessage" :disabled="controlDisabled"></textarea>
+    </div>
+
+    <div>
+      <label for="readonly-text"></label>
+      <textarea id="readonly-text" rows="20" readonly v-model="discussionToHtml"></textarea>
+    </div>
+
+    <div >
+      <input type="text" placeholder="Tchat with your model :-)"  @keyup.enter="send" v-model="message" :disabled="inputDisabled"/>
+      <button type="submit" id="send" @click="send" :disabled="inputDisabled">Send</button>
     </div>
   </div>
 </template>
 
-
 <style scoped>
+
+.outer-container {
+  margin: 0 30%;
+}
+
+.input-container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.input-field {
+  width: 30%;
+  border: none;
+  border-bottom: 2px solid #7d7d7d;
+  background-color: #ebebeb;
+  padding: 5px;
+  font-family: Verdana, sans-serif;
+}
+.input-field-left {
+  border-radius: 5px 0 0 0;
+}
+
+.input-field-right {
+  border-radius: 0 5px 0 0;
+}
+
+.systemmessage-container {
+  margin-top: 20px;
+  width: 100%;
+}
+
+.systemmessage-textarea {
+  width: 100%;
+  height: calc(3 * 1.5em); /* Assuming input height is 1.5em */
+  border: none;
+  border-bottom: 2px solid #7d7d7d;
+  background-color: #f0f0f0;
+  border-radius: 0 0 0 0;
+  padding: 5px;
+  font-family: Verdana, sans-serif;
+  resize: none;
+}
+
+.app-label {
+  font-family: Verdana, sans-serif;
+  display: block;
+  margin-bottom: 5px;
+  font-size: 0.8em;
+  color: #7d7d7d;
+}
 
 </style>
