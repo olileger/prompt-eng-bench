@@ -45,6 +45,7 @@
   padding: 5px;
   font-family: Verdana, sans-serif;
   resize: none;
+  box-sizing: border-box;
 }
 
 .app-label {
@@ -61,6 +62,7 @@
   <body>
 
 <div class="outer-container">
+
     <div class="input-container">
         <input class="input-field input-field-left" type="text" id="instanceName" v-model="instanceName" :disabled="controlDisabled" placeholder="Instance Name">
         <input class="input-field" type="password" id="key" v-model="key" :disabled="controlDisabled" placeholder="API Key">
@@ -81,6 +83,7 @@
         <input type="text" placeholder="Tchat with your model :-)"  @keyup.enter="send" v-model="message" :disabled="inputDisabled"/>
         <button type="submit" id="send" @click="send" :disabled="inputDisabled">Send</button>
     </div>
+
 </div>
 
   </body>
